@@ -40,7 +40,7 @@ router.get('/', async (req, res, next) => {
         
         const filtro = {};
         if (filterByName) {
-            filtro.name = filterByName; //cambiar
+            filtro.name = new RegExp('^' + filterByName, "i"); 
         }
 
         if (filterByType === 'false') {

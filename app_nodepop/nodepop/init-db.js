@@ -8,6 +8,9 @@ const initData = require('./init-db-data.json');
 main().catch(err => console.log('Error', err));
 
 async function main() {
+
+    await new Promise(resolve => connection.once('open', resolve))
+    
     const borrar = await question(
         '¿Seguro de borrar base de datos?'
     )
