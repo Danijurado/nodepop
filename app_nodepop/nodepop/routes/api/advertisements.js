@@ -22,6 +22,15 @@ const tagFilter = function (tags) {
 }
 //GET /api/advertisements
 //devuelve lista de anuncios
+/**
+ * @openapi
+ * /api/advertisements:
+ *  get:
+ *   description: Devuelve una lista de anuncios
+ *   responses:
+ *    200:
+ *     description: Devuelve JSON
+ */
 router.get('/', async (req, res, next) => {
     try {
         const filterByName = req.query.name;
@@ -70,6 +79,15 @@ router.get('/', async (req, res, next) => {
 
 //GET /api/advertisements/(_id)
 //devuelve un anuncio
+/**
+ * @openapi
+ * /api/advertisements/(_id):
+ *  get:
+ *   description: Devuelve un anuncio
+ *   responses:
+ *    200:
+ *     description: Devuelve JSON
+ */
 router.get('/:id', async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -83,6 +101,15 @@ router.get('/:id', async (req, res, next) => {
 
 //PUT /api/advertisements/(_id)
 //actualiza un anuncio
+/**
+ * @openapi
+ * /api/advertisements/(_id):
+ *  put:
+ *   description: Actualiza un anuncio
+ *   responses:
+ *    200:
+ *     description: Devuelve JSON
+ */
 router.put('/:id', async (req, res, next) => {
     try {
       const id = req.params.id;
@@ -98,6 +125,15 @@ router.put('/:id', async (req, res, next) => {
 
 //POST /api/advertisements
 //crear un anuncio
+/**
+ * @openapi
+ * /api/advertisements/:
+ *  post:
+ *   description: Crea un anuncio
+ *   responses:
+ *    200:
+ *     description: Devuelve JSON
+ */
 router.post('/', async (req, res, next) => {
     try {
       const advertisementsData = req.body;
@@ -116,6 +152,15 @@ router.post('/', async (req, res, next) => {
 
 //DELETE /api/advertisements/(_id)
 //elimina un anuncio
+/**
+ * @openapi
+ * /api/advertisements/(_id):
+ *  delete:
+ *   description: actualiza un anuncio
+ *   responses:
+ *    200:
+ *     description: Devuelve JSON
+ */
 router.delete('/:id', async (req, res, next) => {
     try {
       const id = req.params.id;

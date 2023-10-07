@@ -3,7 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const authentication = require('./lib/authentication');
+const swaggerMiddleware = require('./lib/swaggerMiddleware');
 
 require('./lib/connectMongoose');
 
@@ -13,6 +14,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.locals.title = 'Nodepop';
 
 //middlewares
 app.use(logger('dev'));
@@ -24,7 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * rutas del Api
  */
-app.use('/api/advertisements', require('./routes/api/advertisements'));
+app.use('/api-doc', swaggerMiddleware);
+app.use('/api/advertisements',authentication, require('./routes/api/advertisements'));
 
 /**
  * rutas del website
@@ -46,7 +50,7 @@ app.use(function(err, req, res, next) {
     err.status = 422;
   }
   res.status(err.status || 500);
-  
+
   //falla una peticion al Api
   //responder el error con formato JSON
   if (req.originalUrl.startsWith('/api/')) {
