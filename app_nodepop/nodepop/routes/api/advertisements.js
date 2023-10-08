@@ -1,25 +1,9 @@
 const express = require('express');
+const getAdvertisements = require('../../applications/getAdvertisements');
 const router = express.Router();
 const Advertisements = require('../../models/Advertisements');
 
-const rangePrice = function(range) {
-    if (!range.includes('-')) {return range}
-    const [gte, lte] = range.split('-');
 
-    const filter = {};
-    if (lte) {
-        filter.$lte = lte;
-    }
-    if (gte) {
-        filter.$gte = gte;
-    }
-    return filter
-}
-
-const tagFilter = function (tags) {
-    const tagArr = tags.split(',');
-    return {$in: tagArr}
-}
 //GET /api/advertisements
 //devuelve lista de anuncios
 /**
@@ -27,48 +11,34 @@ const tagFilter = function (tags) {
  * /api/advertisements:
  *  get:
  *   description: Devuelve una lista de anuncios
+ *   parameters:
+ *    - in: query
+ *      name: name
+ *      schema:
+ *       type: string
+ *      description: Filtrar por nombre
+ *    - in: query
+ *      name: price
+ *      schema:
+ *       type: string
+ *      description: Filtrar por precio
+ *    - in: query
+ *      name: type
+ *      schema:
+ *       type: string
+ *      description: Filtrar por compra/venta
+ *    - in: query
+ *      name: tags
+ *      schema:
+ *       type: string
+ *      description: Filtrar por tags
  *   responses:
  *    200:
  *     description: Devuelve JSON
  */
 router.get('/', async (req, res, next) => {
     try {
-        const filterByName = req.query.name;
-        const filterByType = req.query.type;
-        const price = req.query.price;
-        const tags = req.query.tags
-        //paginacion
-        const skip = req.query.skip;
-        const limit = req.query.limit;
-
-        //ordenacion
-        const sort = req.query.sort;
-
-        //field seleccion
-        const fields = req.query.fields;
-        
-        const filtro = {};
-        if (filterByName) {
-            filtro.name = new RegExp('^' + filterByName, "i"); 
-        }
-
-        if (filterByType === 'false') {
-            filtro.type = 'sell';
-        } else if (filterByType == 'true') {
-            filtro.type = 'buy';
-        }
-
-        //filtrar precio por rango
-        if (price) {
-            filtro.price = rangePrice(price);
-        }
-
-        if (tags) {
-            filtro.tags = tagFilter(tags);
-        }
-
-    
-        const advertisements = await Advertisements.lista(filtro, skip, limit, sort, fields);
+       const advertisements = await getAdvertisements(req.query);
 
         res.json({results: advertisements})
 

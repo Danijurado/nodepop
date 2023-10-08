@@ -27,14 +27,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * rutas del Api
  */
-app.use('/api-doc', swaggerMiddleware);
 app.use('/api/advertisements',authentication, require('./routes/api/advertisements'));
+app.use('/api-doc',authentication, swaggerMiddleware);
 
 /**
  * rutas del website
  */
 app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

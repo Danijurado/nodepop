@@ -27,12 +27,18 @@ npm run start
 ```shell
 npm run dev
 ```
-
+* Usuario y password swagger/API:
+* username: admin  password: 1111
+  
 ## Rutas de la Web
 
-* http://localhost:3000/advertaisements
+* http://localhost:3000
 
 Home, muestra todos los anuncios, a esta URL podremos aplicar filtros y paginación para conseguir distintas listas.
+
+## Rutas de swagger
+
+* http://localhost:3000/api-doc
 
 ### Con los filtros: 
 
