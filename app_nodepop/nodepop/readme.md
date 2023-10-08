@@ -1,61 +1,57 @@
-# Nodepop
+# NodePop
 
-Website and API application.
+## Para inicializar el proyecto:
 
-## Install
-
-Install dependencies:
-
-```sh
-$ npm install
+```shell
+npm install
 ```
 
-Review database connection on /lib/connectMongoose.js 
+Después puedes instalar los datos iniciales de la base de datos con:
 
-Load initial data:
-
-```sh
-# this command deletes all the data in the database and create default data
-$ npm run init-db
+```shell
+npm run init-db.js
 ```
 
-## Start
+(este proceso te pedira confirmación antes de ejecutarse)
 
-In production:
+## Para arrancar el proyecto:
 
-```sh
-npm start
+* En producción:
+
+```shell
+npm run start
 ```
 
-In development:
+* En desarrollo, para ver los cambios del código en el momento:
 
-```sh
+```shell
 npm run dev
 ```
 
-## Start a MongoDB Server in MacOS or Linux
+## Rutas de la Web
 
-From the folder of the server:
+* http://localhost:3000/advertaisements
 
-```sh
-./bin/mongod --dbpath ./data
-```
+Home, muestra todos los anuncios, a esta URL podremos aplicar filtros y paginación para conseguir distintas listas.
 
-## API Endpoints
+### Con los filtros: 
 
-### GET /api/advertisements
+* Nombre
 
-```json
-{
-    "results": [
-        {
-            "_id": "651c92bd91b8f58232cda7ff",
-            "name": "Apple watch SE",
-            "type": "sell",
-            "price": 100,
-            "image":"apple_watch.jpg",
-            "tags":["lifestyle"]
-        }
-    ]
-}
-```
+* Venta ( siendo un producto a la venta si es 'true' y un producto buscado si es 'false' )
+
+* Precio. Usando la sintaxis X- , -X , X-Y para definir intervalos.
+
+* Tags (pudiendo separar los tags por comas y encontrando todos los anuncios que tengan uno u otro tag).
+
+
+## Rutas del API
+
+* http://localhost:3000/api
+
+Devuelve un json con todos los anuncios existentes. Sobre esta url podremos aplicar filtros para modificar la búsqueda.
+
+El método y filtros son los mismos explicados con anterioridad en las rutas de la Web.
+
+Mediante POST podemos añadir un nuevo anuncio. 
+Con DELETE podremos eliminar un anuncio, introduciendo su ID al final de la ruta, 'http://localhost:3000/api/:id'.
